@@ -1,6 +1,52 @@
 const { default: axios } = require("axios");
 const whatsappService = require("../services/whatsappService");
 
+const verifyToken = async (req, res) => {
+  const token = "whatsappcrm";
+  console.log(req.query);
+  console.log(JSON.stringify(req.query));
+  // Extract query parameters using bracket notation
+  const hub_mode = req.query["hub.mode"];
+  const hub_challenge = req.query["hub.challenge"];
+  const hub_verify_token = req.query["hub.verify_token"];
+
+  if (hub_verify_token === token) {
+    res.status(200).send(hub_challenge);
+  } else {
+    res.status(403).send("Invalid verify token");
+  }
+};
+
+/**
+ * Function to receive all webhooks calls 
+ * And redirect this api call to the associated client using their url
+ */
+
+const receiveWebhooks = async (req, res) => {
+  try {
+    console.log("hit the route");
+    console.log(req.body);
+    const { entry } = req.body;
+    const { id } = entry[0];
+
+    //Find the whatsapp user with the whatsapp business id
+    const whatsappUser = await whatsappService.getWhatsappUserByWabaId(id);
+
+    //If no user exist return
+    if (!whatsappUser) return res.send("Could not find the whatsapp user");
+
+    const { app_url } = whatsappUser;
+
+    // Redirecting the received msg from webhooks to the associated whatsapp user
+    const response = await axios.post(app_url, req.body);
+
+    if (response)
+      res.status(200).send("Api is redirected to the associated client");
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 const receiveMessage = async (req, res) => {
   try {
     const verificationToken = req.body.verifyToken;
@@ -76,4 +122,6 @@ const receiveMessage = async (req, res) => {
 
 module.exports = {
   receiveMessage,
+  verifyToken,
+  receiveWebhooks,
 };

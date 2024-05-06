@@ -16,7 +16,17 @@ const getWhatsappUserById = async (token) => {
   }
 };
 
+const getWhatsappUserByWabaId = async (whatsappAcId) => {
+  try {
+    const user = await Whatsapp.findOne({ waba_id: whatsappAcId });
+    return user;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 module.exports = {
   getAllWhatsappUsers,
   getWhatsappUserById,
+  getWhatsappUserByWabaId,
 };

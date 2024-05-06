@@ -8,6 +8,7 @@ dotenv.config();
 const database = require("./src/config/db");
 const userRoute = require("./src/routes/v1/userRoute");
 const messageRoute = require("./src/routes/v1/messageRoute");
+const webhooksRoute = require("./src/routes/v1/webhooksRoute");
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -18,8 +19,10 @@ app.use(
     origin: ["http://localhost:3000"],
   })
 );
+// app.use("/v1/")
 app.use("/v1/user", userRoute);
 app.use("/v1/message", messageRoute);
+app.use("/v1/whatsapp",webhooksRoute)
 
 database();
 app.listen(5000, () => console.log("server started on PORT " + 5000));

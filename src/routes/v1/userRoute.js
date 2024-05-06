@@ -7,6 +7,9 @@ const {
   signUpValidationRules,
 } = require("../../helpers/validations");
 
+router.get("/", (req, res) => {
+  res.send("User is available");
+});
 router.post(
   "/signup",
   signUpValidationRules,
@@ -17,7 +20,7 @@ router.post(
 router.post("/signin", userController.signInUser);
 router.post("/add_whatsapp/:userId", whatsappController.addWhatsapp);
 router.post("/add_whatsapp/pending", whatsappController.pendingAddWhatsapp);
-router.post("/add_url/:userId", userController.addUrl);
-router.get("/all-whatsapp-users",userController.getAllWhatsappUsers)
+router.put("/add_url/:userId", userController.addUrl);
+router.get("/all-whatsapp-users", userController.getAllWhatsappUsers);
 
 module.exports = router;

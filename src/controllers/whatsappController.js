@@ -18,9 +18,19 @@ const addWhatsapp = async (req, res) => {
       graphDomain,
       data_access_expiration_time,
       status,
+      phone_number_id,
+      waba_id,
+      type,
+      event,
+      version,
     } = data;
 
     const newData = {
+      phone_number_id,
+      waba_id,
+      type,
+      event,
+      version,
       status,
       userId,
       userID,

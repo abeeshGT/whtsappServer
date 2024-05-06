@@ -43,6 +43,23 @@ const whtsappSchema = new mongoose.Schema({
   description: {
     type: String,
   },
+  phone_number_id: {
+    type: String,
+    required: true,
+  },
+  waba_id: {
+    type: String,
+    required: true,
+  },
+  type: {
+    type: String,
+  },
+  event: {
+    type: String,
+  },
+  version: {
+    type: String,
+  },
 });
 
 const Whatsapp = mongoose.model("Whatsapp", whtsappSchema);
