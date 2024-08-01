@@ -22,5 +22,7 @@ router.post("/add_whatsapp/:userId", whatsappController.addWhatsapp);
 router.post("/add_whatsapp/pending", whatsappController.pendingAddWhatsapp);
 router.put("/add_url/:userId", userController.addUrl);
 router.get("/all-whatsapp-users", userController.getAllWhatsappUsers);
+router.post("/add-db",userController.addDatabaseConnection)
+router.post("/connect-webhooks",whatsappController.addWebhooksUrl)
 
 module.exports = router;
